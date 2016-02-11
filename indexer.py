@@ -14,17 +14,19 @@ output
 """
 
 import re
+import sys
 
 if __name__ == '__main__':
-    text = input()
-    processed = re.split("[\W]", text)
+    texts = sys.stdin.readlines()
     counter = {}
-    for word in processed:
-        if word not in counter:
-            counter[word] = 0
-        else:
-            counter[word] += 1
-    
-    result = sorted(counter.values())
+    for text in texts:
+        processed = re.split("[\W]", text)
+        for word in processed:
+            if word not in counter:
+                counter[word] = 1
+            else:
+                counter[word] += 1
+
+    result = sorted(counter.values(), reverse=True)
     for x in range(10):
         print(result[x])
