@@ -15,18 +15,19 @@ output
 
 import re
 import sys
+import operator
 
 if __name__ == '__main__':
     texts = sys.stdin.readlines()
     counter = {}
     for text in texts:
-        processed = re.split("[\W]", text)
+        processed = re.findall("\w+", text)
         for word in processed:
             if word not in counter:
                 counter[word] = 1
             else:
                 counter[word] += 1
 
-    result = sorted(counter.values(), reverse=True)
-    for x in range(10):
+    result = sorted(counter.items(), key=operator.itemgetter(1), reverse=True)
+    for x in range(min(10, len(result))):
         print(result[x])
