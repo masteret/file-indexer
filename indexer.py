@@ -45,3 +45,5 @@ if __name__ == '__main__':
             p = Process(target=text_processor, args=(open(text_file), ))
             p.start()
             p.join()
+    else:
+        text_processor(sys.stdin)
