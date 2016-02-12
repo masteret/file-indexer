@@ -16,13 +16,15 @@ output
 import re
 import sys
 import operator
+import argparser
 
-if __name__ == '__main__':
-    texts = sys.stdin.readlines()
+def text_processor(text):
+    texts = text.readlines()
     counter = {}
     for text in texts:
         processed = re.findall("\w+", text)
         for word in processed:
+            word = word.lower()
             if word not in counter:
                 counter[word] = 1
             else:
@@ -31,3 +33,10 @@ if __name__ == '__main__':
     result = sorted(counter.items(), key=operator.itemgetter(1), reverse=True)
     for x in range(min(10, len(result))):
         print(result[x])
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-f', action="store_true" ,help='if checked, user will be inputting filename')
+    parser.add_argument('filename', action="store", nargs=+, help="all the filenames")
+    parser.parse_args()
+    if 
