@@ -16,7 +16,7 @@ output
 import re
 import sys
 import operator
-import argparser
+import argparse
 
 def text_processor(text):
     texts = text.readlines()
@@ -36,7 +36,9 @@ def text_processor(text):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-f', action="store_true" ,help='if checked, user will be inputting filename')
-    parser.add_argument('filename', action="store", nargs=+, help="all the filenames")
-    parser.parse_args()
-    if 
+    parser.add_argument("-f", action="store_true" ,help="if checked, user will be inputting filename")
+    parser.add_argument("filename", action="store", nargs="*", help="all the filenames")
+    namespace = parser.parse_args()
+    if namespace.f:
+        for text_file in namespace.filename:
+            text_processor(open(text_file))
