@@ -17,6 +17,7 @@ import re
 import sys
 import operator
 import argparse
+from multiprocessing import Process
 
 def text_processor(text):
     texts = text.readlines()
@@ -41,4 +42,6 @@ if __name__ == '__main__':
     namespace = parser.parse_args()
     if namespace.f:
         for text_file in namespace.filename:
-            text_processor(open(text_file))
+            p = Process(target=text_processor, args=(open(text_file), ))
+            p.start()
+            p.join()
