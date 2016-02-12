@@ -13,6 +13,7 @@ sort values and pick top 10
 output
 """
 
+import os
 import re
 import sys
 import operator
@@ -42,8 +43,11 @@ if __name__ == '__main__':
     namespace = parser.parse_args()
     if namespace.f:
         for text_file in namespace.filename:
-            p = Process(target=text_processor, args=(open(text_file), ))
-            p.start()
-            p.join()
+            if os.path.exists(text_file):
+                p = Process(target=text_processor, args=(open(text_file), ))
+                p.start()
+                p.join()
+            else:
+                print("Hey dude,", text_file, "doesn't even exist!")
     else:
         text_processor(sys.stdin)
