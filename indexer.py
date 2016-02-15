@@ -13,20 +13,23 @@ from multiprocessing import Process
 # output: none
 # print: top 10 words in file/if file has less than 10 words, print all words
 def text_processor(text):
-    texts = text.readlines()
-    counter = {}
-    for text in texts:
-        processed = re.findall("\w+", text)
-        for word in processed:
-            word = word.lower()
-            if word not in counter:
-                counter[word] = 1
-            else:
-                counter[word] += 1
+    try:
+        texts = text.readlines()
+        counter = {}
+        for text in texts:
+            processed = re.findall("\w+", text)
+            for word in processed:
+                word = word.lower()
+                if word not in counter:
+                    counter[word] = 1
+                else:
+                    counter[word] += 1
 
-    result = sorted(counter.items(), key=operator.itemgetter(1), reverse=True)
-    for x in range(min(10, len(result))):
-        print(result[x])
+        result = sorted(counter.items(), key=operator.itemgetter(1), reverse=True)
+        for x in range(min(10, len(result))):
+            print(result[x])
+    except UnicodeDecodeError:
+        print("only support text file")
 
 # main method
 # input: filenames from cmd line (optional) or text from stdin
