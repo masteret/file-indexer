@@ -11,7 +11,7 @@ from multiprocessing import Process
 
 # input: python file pointer
 # output: none
-# print: file name follow by top 10 words in file/if file has less than 10 words, print all words
+# print: top 10 words in file/if file has less than 10 words, print all words
 def text_processor(text):
     texts = text.readlines()
     counter = {}
@@ -25,7 +25,6 @@ def text_processor(text):
                 counter[word] += 1
 
     result = sorted(counter.items(), key=operator.itemgetter(1), reverse=True)
-    print(text.name)
     for x in range(min(10, len(result))):
         print(result[x])
 
