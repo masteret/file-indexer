@@ -1,17 +1,6 @@
-# CLI arg read input
-
-# word processor function
-
-# place to hold count, possibly a dict
-
-"""
-read raw input
-split by regex (not char nor degit)
-loop through each of them
-put them in a dict, case insensitive so lower case
-sort values and pick top 10
-output
-"""
+# Simple Distributed File Indexer
+# Author: Ka Hei Chan
+# email: kaheichan@utexas.edu
 
 import os
 import re
@@ -20,6 +9,9 @@ import operator
 import argparse
 from multiprocessing import Process
 
+# input: python file pointer
+# output: none
+# print: file name follow by top 10 words in file/if file has less than 10 words, print all words
 def text_processor(text):
     texts = text.readlines()
     counter = {}
@@ -33,15 +25,18 @@ def text_processor(text):
                 counter[word] += 1
 
     result = sorted(counter.items(), key=operator.itemgetter(1), reverse=True)
+    print(text.name)
     for x in range(min(10, len(result))):
         print(result[x])
 
+# main method
+# input: filenames from cmd line (optional) or text from stdin
+# output: None
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-f", action="store_true" ,help="if checked, user will be inputting filename")
     parser.add_argument("filename", action="store", nargs="*", help="all the filenames")
     namespace = parser.parse_args()
-    if namespace.f:
+    if len(namespace.filename) > 0:
         for text_file in namespace.filename:
             if os.path.exists(text_file):
                 p = Process(target=text_processor, args=(open(text_file), ))
